@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Demo</title>
+</head>
+<body>
+    <script>
+        /*
+        AJAX Asynchronous JavaScript And XML
+
+        Ajax is a web development techinique which helps to create highly
+        responsive,near desktop software like user experience web applications
+
+
+        HTML,CSS for representation, JSON/XML/Text for storing Data, XMLHttpRequest Object
+        for action in the background and JavaScript put all this together.
+
+        AJAX is used in web pages to be updated asynchronously by exchanging data with a web
+        server behind the scenes. This makes possible to update part of a web page, without reloading
+        the whole page.
+
+        Using AJAX we can create better and faster web applications.
+
+        AJAX is not Programming Language.
+
+        Examples:
+        On Type Search
+        Movie Rating Feature
+
+        Why use AJAX:
+    -->No page reload on each request
+    -->Update a part of page not full page.
+    -->Send data to the server in background
+    -->Receive data from server in background
+    -->Better User experience
+    -->Improve speed and performance.
+
+    Do you  Know
+    HTML
+    CSS
+    Javascript
+    JSON
+    Server Side Language -PHP,JSP,ASP
+    SQL
+
+
+    How AJAX works?
+
+    HTML,CSS,JS                         JSP,ASP,PHP
+    Client -----------Request--------->Server Side ----------->Database
+        <----------Response--------    Language<------------             
+    
+        
+    CLient----->JS call--->Request() --------->Server Side  -------->Database
+                    XMLHttpRequest   <--------- Language <---------
+                    Callback function() Response
+
+-->Client sends request, a Javascript call goes to XMLHttpRequest object
+-->HTTP Request is sent to Server by XMLHttpRequest object
+-->If needed, server interacts with the database using JSP,ASP,PHP (Server Side Language).
+-->Data Received
+-->Server sends Text/JSON/XML data to the XMLHttpRequest callbacl function
+
+
+
+Synchronous and asynchronous
+
+In Synchronous, when a client makes a request to the server he has to wait until he gets the response
+which means synchronous call blocks the client until operation completes.
+
+ ---------Exam--------->
+Student             Wait   College
+<------Result----------
+
+
+In Asynchronous , when a client makes a request to the server he does not need to wait until he gets
+the response which means asynchronous call doesn't block the client until operation completes.
+
+He is free to do other activities.
+
+
+Client------------->Youtube
+    --------->Editing Video title
+
+
+    XMLHttpRequest
+
+    XMLHttpRequest(XHR) is an API that can be used by javascript,JScript,VBScript, and
+    other web browser scripting languages to transfer and manipulate data to and from a 
+    web server using HTTP, establishing an independent connection channel between Client
+    and Server.
+
+    The data can be Text Data, XML Data and JSON Data.
+
+    XMLHttpRequest Object
+
+    An object of XMLHttpRequest is used for asynchronous communication between client and server.
+    It performs following operations:
+
+    Send data from the client in the background.
+    Receives the data from the server
+    Updates the web page without reloading it.
+
+
+    Creating XMLHttpRequest Object
+
+    Syntax:
+    const variable = new XMLHttpRequest();
+    Example:
+    const xhr = new XMLHttpRequest();
+
+
+
+    XMLHttpRequest Properties:
+
+    onreadystatechange -->It defines a function to be called when the readystate property changes.
+    The onreadystatechange is called multiple times during an XHR request. We explicitly 
+    ignore all the states other than readyState ===4, which means that the request is done.
+
+
+    readystate--> This property returns the state an XMLHttpRequest client is in. An
+    XHR client exists in one of the following states:
+
+    Value           State
+    0               UNSENT
+    1               OPENED
+    2               HEADERS_RECEIVED
+    3               LOADING
+    4               DONE
+
+
+    UNSENT -->The XMLHttpRequest client has been created,but the open() method 
+    hasn't been called yet.
+
+
+    OPENED -->open() method has been invoked. During this state, the 
+    request headers can be ser using the setRequestHeader() method and the send()
+    method can be called which will initiate the fetch.
+
+    HEADERS_RECEIVED--> send() has been called and the response headers have been received.
+
+    LAODING--> Response's body is being received. If responseType is "text" or empty string,
+    responseText will have the partial text response as it loads.
+
+    DONE--> The fetch operation is complete. This could mean that either the data transfer 
+    has been completed successfully or failed.
+
+
+    responseType --> It is an enumerated string value specifying the type of data
+    contained in the response.
+    It also lets the author change the response type.
+
+    If an empty string is set as the value of responseType, the default value of text is used.
+    -->"" - An empty responseTYpe strinf is teated the sama as "text", the default type.
+    
+    -->arraybuffer - The response is a JavaScript ArrayBuffer containing binary data.
+
+    -->blob - The response is a Blob object containing the binary data
+    
+    -->document - The response is an HTML Document or XML XMLDocument, as appropriate based on
+        the MIMIE type of the received data.
+
+    -->json - The response is a JavaScript object created by parsing the contents of received data as JSON
+    
+    -->text - The response is a text in a DOMString object.
+
+
+    responseText - It returns the text received from a server following a request being sent.
+
+    responseXML - It is read-only property returns a Document containing the HTML or XML retrieved
+    by the request; or null if the request was unsuccessful, has not yet been sent, or if the data can't be 
+    parsed as XML or HTML.
+
+    status - It returns the numerical HTTP status code of the XMLHttpRequest's response.
+
+    200:"OK"
+    403:"Forbidden"
+    404:"Not Found"
+
+    https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+    statusText - It returns the status text (eg. "OK" or "Not Found"). If the request's readyState is in 
+    UNSENT or OPENED state, the value of statusText will be an empty.
+
+    response - This property returns the response's body content as an ArrayBuffer, Blob,Document
+    Javascript Object, or DOMString, depending on the value of the request's responseType property.
+
+
+    timeout - This property is an unsigned long representing the number of milliseconds a request can
+    take before automatically being terminated. The default value is 0, which means there is no timeout.
+    Timeout shouldn't be used for synchronous XMLHttpRequests requests used in a document
+    environment or it will throw an InvalidAccessError exception. When a timeout happens, a timeout event is fired.
+
+
+    responseURL - It returns the serialized URL of the response or the empty string if the URL is null.
+    If the URL is returned, any URL fragment present in the URL will be stripped away. The
+    value of responseURL will be the final URL obtained after any redirects.
+
+    upload - It returns an XMLHtttpRequestUpload object that can be observed to monitor an upload's
+    progress. It is an apaque object, but because it's also an XMLHttpRequestEventTarget, event listeners can be
+    attached to track its process.
+
+    Event           EventListener       Description
+    load start      onloadstart         Upload has begun
+
+    progress        onprogress          Amount of progress so far
+
+    abort           onabort             Upload aborted
+
+    error           onerror             Upload failed due to an error
+
+    load            onload              Upload completed succssfully   
+
+    timeout         ontimeout           Upload timed out because a reply did not arrive
+                                        within the time interval specified by the XMLHttpRequest.timeout
+
+    loadend         onloadend           The upload finished. This event does not differentiate between succes
+                                        or failure, and is sent at the end of the upload regardless of the outcome.
+                                        Prior to this event, one of load,error,abort, or timeout will already have been delivered
+                                        to indicate why the upload ended.
+
+
+    withCredentials - It is a Boolean that indicates whether or not cross-site Access-Control
+    requests should be made using credentials such as cookies, authorization headers or TLS
+    client certificates. Setting withCredentials has no effect in same0site requests.
+
+    In addition, this flag is also used to indicate when cookies are to be ignored in the response.
+    The fafault is false.
+
+    XMLHttpRequest from a different domain cannot set cookie values for their own domain
+    unless withCredentials is set to true before making the request. The third-party cookies
+    obtained by setting withCredentials to true will still honor same-origin policy and hence 
+    can not accessed by the requesting script through document.cookie or from response headers.
+
+
+
+    XMLHttpRequest Methods
+
+    open(method,url,async,user,psw)
+
+    This method is used to initialize a newly-created request, 
+    or re-initialize an existing one
+
+    where,
+    method - the request type GET, POST, or HEAD or another method supported by server
+    
+    url - The URL /File location you are sending the request to. This can be a.txt,.xml,.jsp,.php
+    files etc.
+
+    async - If asynchronous then it take true or if synchronous then it take false, By default it is true.
+
+    user - user name to use for authentication purpose. By default its null. It is optional
+    psw - password to use for authentication purpose. By default its null. It is optional.
+
+    Example:
+    xhr.open("GET",'data.txt',true);
+
+    xhr.open('GET','https://jsonplaceholder.typicode.com/posts',true)
+
+    send() - This method is used to sent the request to server. This is used form GET requests.
+
+    Example
+    xhr.send();
+    send(body) - This method is used to send the request to the server. This is used for POST requests.
+
+    where body is the data you want to send
+
+    Example:
+    xhr.send("fname=geeky&lname=shows")
+
+
+    setRequestHeader(header,value)
+    This method is used to add a header-value pair to the header to be sent.
+    Example:
+    xhr.setRequestHeader("Access-Control-Allow-Origin","*")
+
+    getResponseHeader(headerName)
+    This method returns specific header information from  the server response.
+
+    Example:
+    xhr.getResponseHeader("Last-Modified")
+
+    getAllResponseHeaders() 
+    This method returns all header information from the server response.
+
+    abort()
+
+    This method is used to cancel the current request. When is request is aborted, its 
+    readyState is changed to XMLHttpRequest.UNSENT(0) and the request's status code
+     is set to 0.
+
+    overrideMimeType(mimiType)
+
+    It specifies a MIME type other than the one provided by the server to be used instead
+    when interpteting the data being transferred in a request.
+
+    This may used, for example, to force a stream to be treated and parsed as "text/xml", even
+    if the server does not report it as such.
+
+    This method must be called before calling send().
+
+    Example
+    xhr.overrideMimeType("text/plain")
+
+
+    Request Header
+
+    A request Header is an HTTP header that can be used in an HTTP request, and that doesn't relate to the
+    content if the message. Request headers,like Accept-*,or If-* allow to perform conditional
+    requests; other like cookie, User-Agent, or Referer precise the context so that the server
+    can tailor the answer.
+
+
+    GET/home.html HTTP/1.1
+    User-Agent: Mozilla/5.0 (Macintosh;Intel Mac OS X 10.9;rv:50.0) Gecko/20100101 Firefix/50.0
+    Accept:text/html,application/xhtml_xml,application/xml;q=0.9,*\*;q=0.8
+    Accept-Language:en-US;en;q=0.5
+    Accept-Encoding:gzip,deflate,br
+    Referer:https://developer.mozilla.org/testpage.html
+
+
+
+
+    https://devloper.mozilla,org/en-US.docs/Glossary/Request_header
+
+
+
+    Response Header
+
+    A response header is an HTTP header that can be used in an HTTP response and that
+    doesn't relate to the content of the message. Response headers like Age,Location or Server
+    are used to give a more detailed context of the response.
+
+    200 OK
+    Access-Control-Allow
+
+
+
+
+
+
+    https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers
+
+
+
+
+    Content-Type
+
+
+    appliation/EDI-X12
+    application/EDIFACT
+    application/javascript
+    application/octet-stream
+    application/ogg
+    application/pdf
+    application/xhtml+xml
+    application/x-shockwave-flash
+    application/json
+    application/Id+json
+    application/xml
+    
+
+
+
+
+
+
+
+
+
+Make an HTTP Request
+
+Inorder to make an HTTP request to the server with Javascript, you need an instance of an object
+with the necessary functionality. This us where XMLHttpRequest comes in.
+
+Create XMLHttpRequest Object
+
+const xhr = new XMLHttpRequest();
+
+initialize created request
+
+xhr.open("GET","data.txt",true)
+
+
+send the request
+xhr.send()
+
+
+Create XMLHttpRequest Object
+
+const xhr = new XMLHttpRequest();
+
+initialize created request
+
+xhr.open("POST","signupform.php",true)
+
+
+if method type POST then you may have to set Request Header before sending request
+xhr.setRequestHeader('Content-Type','appliation/JSON')
+
+send the request
+xhr.send(body)
+
+
+Handling Server Response
+After making request, you will receive a response back.
+
+At this stage, you need to tell the XMLHttpRequest object which javascript function will hnadle
+the response,by setting the onreadystatechange property of the object and naming it after the function
+to call ehen the request changes state.
+
+
+xhr.onreadystatechange = nameOfTheFunction;
+
+function nameOfTheFunction{
+
+}
+Using Anonymous Function
+
+xhr.onreadystatechange = function() {
+    //Process the server response here.
+};
+
+Using Arrow Function
+xhr.onreadystatechange = ()=>{
+    //Process the server response here.
+}
+ 
+
+xhr.onreadystatechange = showdata
+
+function showdata() {
+
+}
+
+
+Using Anonymous Function
+
+xhr.onreadystatechange = function() {
+    //Process the server response here.
+};
+
+Using Arrow Function
+xhr.onreadystatechange = ()=>{
+    //Process the server response here.
+}
+
+
+Respone Handling Function
+
+
+First, the function needs to check the request's state. If the state has the value of
+XMLHttpRequest.DONE (Corresponding to 4), that means that full server response was received
+and it's OK for you to continue processing it.
+
+xhr.onreadystatechange = function() {
+    //process the server response here
+    if(xhr.readyState ===XMLHttpRequest.DONE{
+
+        //Everything is good, the response was received.
+    } else {
+        //Not ready yet
+    }
+}
+
+next, check the HTTP Response status code of the HTTP response, We differentiate between
+a successful and unsuccessful AJAX call by checking fo a 200 OK response code.
+
+xhr.onreadystatechange = function() {
+    //process the server response here
+    if(xhr.readyState ===XMLHttpRequest.DONE{
+
+        //Everything is good, the response was received.
+        if(xhr.status ===200){
+            //Perfect
+        } else {
+            //There was a problem with the request
+            //Example 404(not Found) or 500 (Internal Server Error)
+        }
+    } else {
+        //Not ready yet
+    }
+}
+
+After checking the state of the request and the HTTP status code of the response 
+you can do whatever you want with the data the server sent. You have two options to access that data
+xhr.responseText - It returns the server response as a string of text.
+xhr.responseXML - It returns the response as an XMLDocument object you 
+can traverse with JavaScript DOM functions.
+
+
+AJAX Request Response
+
+
+const xhr = new XMLHttpRequest();
+
+xhr.open("GET","data.txt",true)
+xhr.onreadystatechange = function() {
+    //process the server response here
+    if(xhr.readyState ===XMLHttpRequest.DONE{
+
+        //Everything is good, the response was received.
+        if(xhr.status ===200){
+           console.log(xhr);
+           console.log(xhr.responseText);
+        } else {
+            console.log("Problem with request")
+            //There was a problem with the request
+            //Example 404(not Found) or 500 (Internal Server Error)
+        }
+    } 
+};
+xhr.send();
+
+
+
+
+const xhr = new XMLHttpRequest();
+
+xhr.open("GET","data.txt",true)
+xhr.onload = function() {
+    if(xhr.staus===200){
+        console.log(xhr);
+        console.log(xhr.responseText);
+
+    } else {
+        console.log("Problem with Request");
+    }
+};
+xhr.send();
+
+
+
+
+const xhr = new XMLHttpRequest();
+
+xhr.open("GET","data.txt",true)
+xhr.onreadystatechange = ()=> {
+    //process the server response here
+    if(xhr.readyState ===XMLHttpRequest.DONE{
+
+        //Everything is good, the response was received.
+        if(xhr.status ===200){
+           console.log(xhr);
+           console.log(xhr.responseText);
+        } else {
+            console.log("Problem with request")
+            //There was a problem with the request
+            //Example 404(not Found) or 500 (Internal Server Error)
+        }
+    } 
+};
+xhr.send();
+
+
+
+
+const xhr = new XMLHttpRequest();
+
+xhr.open("GET","data.txt",true)
+xhr.onload = ()=> {
+    if(xhr.staus===200){
+        console.log(xhr);
+        console.log(xhr.responseText);
+
+    } else {
+        console.log("Problem with Request");
+    }
+};
+xhr.send();
+
+
+
+XMLHttpRequestEventTarget
+
+XMLHttpRequestEventTarget is the interface that describes the event handlers you can
+implement in an object that will handle events for an XMLHttpRequest.
+
+onload
+
+The XMLHttpRequestEventTarget.onload is the function called when an 
+XMLHttpRequest transaction completes successfully.
+
+
+Syntax:
+
+XMLHttpRequestEventTarget.onload = callback;
+
+const xhr = new XMLHttpRequest()
+    xhr.open('GET','data.txt',true);
+    xhr.onload = function() {
+        if(xhr.status ===200) {
+            console.log(xhr);
+            console.log(xhr.responseText);
+        }else {
+            console.log("Problem occured");
+        }
+    };
+
+    xhr.send()
+
+Using Arrow Function
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', 'data.txt', true);
+    xhr.onload = () => {
+        if (xhr.status === 200) {
+            console.log(xhr);
+            console.log(xhr.responseText);
+        } else {
+            console.log("Problem occured");
+        }
+    };
+
+    xhr.send()
+
+onprogress
+
+The XMLHttpRequestEventTarget.onprogress is the function called periodically 
+with information when an XMLHttpRequest before success completely.
+
+
+Syntax:
+XMLHttpRequest.onprogress = callback;
+
+Exmaple:
+
+xhr.onprogress = function(e) {
+    e.loaded; //The amount of data currently transferred
+    e.total;  //The amount of data to be transferred
+
+};
+
+
+Using Arrow Function
+
+xhr.onprogress = (e) => {
+    e.loaded; //The amount of data currently transferred
+    e.total;  //The amount of data to be transferred
+
+};
+
+
+onerror
+
+The XMLHttpRequestEventTarget.onerror is the function called when an
+XMLHttpRequest transaction fails due to an error.
+
+Syntax:
+XMLHttpRequest.onerror = callback;
+
+Example
+xhr.onerror = function() {
+    console.log("Error has occured")
+};
+
+
+onloadstart
+
+The XMLHttpRequestEventTarget.onloadstart is the function called when an
+XMLHttpRequest transaction starts transferring data.
+
+Syntax:
+XMLHttpRequest.onloadstart = callback;
+
+Example:
+xhr.onloadstart = function() {
+    console.log('The transaction started..')
+};
+
+onabort
+
+The XMLHttpRequestEventTarget.onabort is the function called when an 
+XMLHttpRequest transaction is aborted,such as when the XMLHttpRequest.abort() function is called.
+
+Syntax:
+
+XMLHttpRequest.onabort = callback;
+
+Example:
+
+xhr.onabort = function() {
+    console.log('Terminated')
+};
+
+ontimeout
+
+The function that is called if the event times out and the
+ timeout event is received by this object; this only happens if a timeout has been
+ previously established by setting the value of the XMLHttpRequest object's timeout attribute.
+
+ Syntax:
+ XMLHttpRequest.ontimeout = callback;
+
+ Example:
+ xhr.ontimeout = function() {
+     console.log('Timeout!!')
+ }
+
+ onloadend 
+
+The XMLHttpRequestEventTarget.onloadend is the function called when an 
+XMLHttpRequest transaction ends transferring data
+
+Syntax:
+XMLHttpRequest.onloadend = callback;
+
+Example:
+
+xhr.onloadend  = function() {
+    console.log('The transaction end!!')
+};
+
+
+
+
+
+
+
+*/
+    </script>
+    
+</body>
+</html>
